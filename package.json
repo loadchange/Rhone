@@ -1,0 +1,24 @@
+{
+  "name": "sirius",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/loadchange/sirius.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/loadchange/sirius/issues"
+  },
+  "homepage": "https://github.com/loadchange/sirius#readme",
+  "devDependencies": {
+    "koa": "^2.7.0",
+    "nodemon": "^1.19.1"
+  }
+}
