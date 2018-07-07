@@ -1,21 +1,34 @@
 const Koa = require('koa');
+const Router = require('koa-router');
 const app = new Koa();
+const router = new Router();
+const userRouter = new Router({ prefix: '/users' });
 
-app.use(async (ctx, next) => {
-  console.log(1);
-  await next();
-  console.log(2);
-  ctx.body = 'hello koa!   1 3 5 4 2';
+const auth = async (ctx, next) => {
+  console.log(ctx.url);
+  if (ctx.url !== '/users') {
+    ctx.throw(401);
+  }
+  next();
+};
+
+router.get('/', ctx => {
+  ctx.body = 'home!';
 });
 
-app.use(async (ctx, next) => {
-  console.log(3);
-  await next();
-  console.log(4);
+userRouter.get('/', auth, ctx => {
+  ctx.body = 'user list';
 });
 
-app.use(ctx => {
-  console.log(5);
+userRouter.post('/', auth, ctx => {
+  ctx.body = 'create user';
 });
+
+userRouter.get('/:id', auth, ctx => {
+  ctx.body = `query user by id = ${ctx.params.id}`;
+});
+
+app.use(router.routes());
+app.use(userRouter.routes());
 
 app.listen(3000);
