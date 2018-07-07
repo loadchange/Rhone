@@ -30,5 +30,14 @@ userRouter.get('/:id', auth, ctx => {
 
 app.use(router.routes());
 app.use(userRouter.routes());
+/**
+ * options
+ * 检测服务支持的请求方法
+ * cors 的预检请求
+ * 
+ * allowedMethods 用于响应 options 所支持的方法
+ * 可以响应的返回 405 不支持 、501 未实现
+ */
+app.use(userRouter.allowedMethods());
 
 app.listen(3000);
