@@ -1,5 +1,6 @@
 const Koa = require('koa');
 const Router = require('koa-router');
+const bodyparser = require('koa-bodyparser');
 const app = new Koa();
 const router = new Router();
 const userRouter = new Router({ prefix: '/users' });
@@ -28,6 +29,10 @@ userRouter.delete('/:id', ctx => {
   ctx.status = 204;
 });
 
+/**
+ * 引入 koa-bodyparser 解析请求体 body
+ */
+app.use(bodyparser());
 app.use(router.routes());
 app.use(userRouter.routes());
 app.use(userRouter.allowedMethods());
