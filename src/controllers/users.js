@@ -6,7 +6,11 @@ class UsersCtl {
   }
 
   findById(ctx) {
-    ctx.body = db[ctx.params.id - 0];
+    const idx = ctx.params.id - 0;
+    if (idx > db.length) {
+      ctx.throw(412);
+    }
+    ctx.body = db[idx];
   }
 
   create(ctx) {
