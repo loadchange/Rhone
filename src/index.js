@@ -3,7 +3,17 @@ const bodyparser = require('koa-bodyparser');
 const routing = require('./routes');
 const app = new Koa();
 
-routing(app);
+app.use(async (ctx, next) => {
+  try {
+    await next();
+  } catch (err) {
+    ctx.status = err.status || err.statusCode || 500;
+    const { message } = err;
+    ctx.body = { message };
+  }
+});
+
 app.use(bodyparser());
+routing(app);
 
 app.listen(3000, () => console.log('start... \nhttp://localhost:3000'));
