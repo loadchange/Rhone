@@ -5,7 +5,7 @@ const { find, findById, create, update, del } = require('../controllers/users');
 router.get('/', find);
 router.post('/', create);
 router.get('/:id', findById);
-router.put('/:id', update);
+router.patch('/:id', update);
 router.delete('/:id', del);
 
 module.exports = router;
