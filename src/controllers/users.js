@@ -1,3 +1,4 @@
+const jsonwebtoken = require('jsonwebtoken');
 const User = require('../models/users');
 
 class UsersCtl {
