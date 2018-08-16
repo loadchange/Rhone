@@ -1,5 +1,6 @@
 const jsonwebtoken = require('jsonwebtoken');
 const User = require('../models/users');
+const { secret } = require('../config');
 
 class UsersCtl {
   async find(ctx) {
@@ -43,9 +44,19 @@ class UsersCtl {
   async del(ctx) {
     const user = await User.findByIdAndRemove(ctx.params.id);
     if (!user) {
-      ctx.throw(404, '用户不存在');
+      ctx.throw(404, "Users don't exist!");
     }
     ctx.status = 204;
+  }
+
+  async login(ctx) {
+    const user = await User.findOne(ctx.request.body);
+    if (!user) {
+      ctx.throw(401, 'Incorrect user name or password!');
+    }
+    const { _id, name } = user;
+    const token = jsonwebtoken.sign({ _id, name }, secret, { expiresIn: '1d' });
+    ctx.body = { token };
   }
 }
 
