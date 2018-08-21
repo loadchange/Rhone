@@ -1,5 +1,6 @@
+const path = require('path');
 const Koa = require('koa');
-const bodyparser = require('koa-bodyparser');
+const koaBody = require('koa-body');
 const error = require('koa-json-error');
 const parameter = require('koa-parameter');
 const mongoose = require('mongoose');
@@ -10,7 +11,15 @@ const app = new Koa();
 mongoose.connect(connectionStr, { useNewUrlParser: true }, () => console.log('MongoDB Connection successful!'));
 mongoose.connection.on('error', console.error);
 
-app.use(bodyparser());
+app.use(
+  koaBody({
+    multipart: true,
+    formidable: {
+      uploadDir: path.join(__dirname, '/public/uploads'),
+      keepExtensions: true,
+    },
+  })
+);
 parameter(app);
 app.use(
   error({
