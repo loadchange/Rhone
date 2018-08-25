@@ -3,6 +3,7 @@ const Koa = require('koa');
 const koaBody = require('koa-body');
 const error = require('koa-json-error');
 const parameter = require('koa-parameter');
+const koaStatic = require('koa-static');
 const mongoose = require('mongoose');
 const routing = require('./routes');
 const { connectionStr } = require('./config');
@@ -20,6 +21,7 @@ app.use(
     },
   })
 );
+app.use(koaStatic(path.join(__dirname, 'public')));
 parameter(app);
 app.use(
   error({
