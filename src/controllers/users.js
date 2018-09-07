@@ -8,7 +8,13 @@ class UsersCtl {
   }
 
   async findById(ctx) {
-    const user = await User.findById(ctx.params.id);
+    const { fields = '' } = ctx.query;
+    const selectFields = fields
+      .split(';')
+      .filter(f => f.trim())
+      .map(f => ' +' + f)
+      .join('');
+    const user = await User.findById(ctx.params.id).select(selectFields);
     if (!user) {
       ctx.throw(404, "Users don't exist!");
     }
