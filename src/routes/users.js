@@ -13,6 +13,7 @@ const {
   listFollowing,
   follow,
   unfollow,
+  checkUserExist,
 } = require('../controllers/users');
 const { secret } = require('../config.js');
 
@@ -27,7 +28,7 @@ router.post('/login', login);
 
 router.get('/:id/followers', listFollowers);
 router.get('/:id/following', listFollowing);
-router.put('/following/:id', auth, follow);
-router.delete('/following/:id', auth, unfollow);
+router.put('/following/:id', auth, checkUserExist, follow);
+router.delete('/following/:id', auth, checkUserExist, unfollow);
 
 module.exports = router;
