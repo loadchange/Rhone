@@ -10,6 +10,9 @@ class TopicsCtl {
     const topic = await new Topic(ctx.request.body).save();
     ctx.body = topic;
   }
+  async find(ctx) {
+    ctx.body = await Topic.find();
+  }
 }
 
 module.exports = new TopicsCtl();

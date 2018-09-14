@@ -8,5 +8,6 @@ const { secret } = require('../config');
 const auth = jwt({ secret });
 
 router.post('/', auth, create);
+router.get('/', find);
 
 module.exports = router;
