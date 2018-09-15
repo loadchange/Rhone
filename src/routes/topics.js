@@ -9,5 +9,6 @@ const auth = jwt({ secret });
 
 router.post('/', auth, create);
 router.get('/', find);
+router.get('/:id', findById);
 
 module.exports = router;
