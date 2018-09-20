@@ -4,10 +4,10 @@ const { secret } = require('../config');
 
 class UsersCtl {
   async find(ctx) {
-    const { per_page = 10 } = ctx.query;
+    const { per_page = 10, q } = ctx.query;
     const page = Math.max(ctx.query.page * 1, 1) - 1;
     const perPage = Math.max(per_page * 1, 1);
-    ctx.body = await User.find()
+    ctx.body = await User.find({ name: new RegExp(q) })
       .limit(perPage)
       .skip(page * perPage);
   }
