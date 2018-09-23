@@ -110,7 +110,7 @@ class UsersCtl {
   async checkUserExist(ctx, next) {
     const user = await User.findById(ctx.params.id);
     if (!user) {
-      ctx.throw(404, '用户不存在');
+      ctx.throw(404, "Users don't exist!");
     }
     await next();
   }
@@ -135,6 +135,35 @@ class UsersCtl {
     const index = me.following.map(id => id.toString()).indexOf(ctx.params.id);
     if (index > -1) {
       me.following.splice(index, 1);
+      me.save();
+    }
+    ctx.status = 204;
+  }
+
+  async followTopic(ctx) {
+    const me = await User.findById(ctx.state.user._id).select('+followingTopics');
+    if (!me.followingTopics.map(id => id.toString()).includes(ctx.params.id)) {
+      me.followingTopics.push(ctx.params.id);
+      me.save();
+    }
+    ctx.status = 204;
+  }
+
+  async listFollowingTopics(ctx) {
+    const user = await User.findById(ctx.params.id)
+      .select('+followingTopics')
+      .populate('followingTopics');
+    if (!user) {
+      ctx.throw(404, '用户不存在');
+    }
+    ctx.body = user.followingTopics;
+  }
+
+  async unfollowTopic(ctx) {
+    const me = await User.findById(ctx.state.user._id).select('+followingTopics');
+    const index = me.followingTopics.map(id => id.toString()).indexOf(ctx.params.id);
+    if (index > -1) {
+      me.followingTopics.splice(index, 1);
       me.save();
     }
     ctx.status = 204;
