@@ -6,6 +6,10 @@ const topicSchema = new Schema({
   name: { type: String, required: true },
   avatar_url: { type: String },
   introduction: { type: String, select: false },
+  topics: {
+    type: [{ type: Schema.Types.ObjectId, ref: 'Topic' }],
+    select: false,
+  },
 });
 
 module.exports = model('Topic', topicSchema);
