@@ -7,10 +7,11 @@ class CommentsCtl {
     const perPage = Math.max(per_page * 1, 1);
     const q = new RegExp(ctx.query.q);
     const { questionId, answerId } = ctx.params;
-    ctx.body = await Comment.find({ content: q, questionId, answerId })
+    const { rootCommentId } = ctx.query;
+    ctx.body = await Comment.find({ content: q, questionId, answerId, rootCommentId })
       .limit(perPage)
       .skip(page * perPage)
-      .populate('commentator');
+      .populate('commentator replyTo');
   }
   async checkCommentExist(ctx, next) {
     const comment = await Comment.findById(ctx.params.id).select('+commentator');
@@ -41,6 +42,8 @@ class CommentsCtl {
   async create(ctx) {
     ctx.verifyParams({
       content: { type: 'string', required: true },
+      rootCommentId: { type: 'string', required: false },
+      replyTo: { type: 'string', required: false },
     });
     const commentator = ctx.state.user._id;
     const { questionId, answerId } = ctx.params;
@@ -58,7 +61,8 @@ class CommentsCtl {
     ctx.verifyParams({
       content: { type: 'string', required: false },
     });
-    await ctx.state.comment.update(ctx.request.body);
+    const { content } = ctx.request.body;
+    await ctx.state.comment.update({ content });
     ctx.body = ctx.state.comment;
   }
   async del(ctx) {
