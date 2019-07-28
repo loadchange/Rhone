@@ -19,4 +19,5 @@ export interface RhoneRequestConfig {
   method?: Method
   data?: any
   params?: any
+  headers?: any
 }
