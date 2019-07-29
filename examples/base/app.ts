@@ -77,3 +77,34 @@ rhone({
   url: '/base/buffer',
   data: arr
 })
+
+rhone({
+  method: 'post',
+  url: '/base/post',
+  data: {
+    a: 1,
+    b: 2
+  }
+})
+
+rhone({
+  method: 'post',
+  url: '/base/post',
+  headers: {
+    'content-type': 'application/json',
+    'Accept': 'application/json, text/plain, */*'
+  },
+  data: {
+    a: 1,
+    b: 2
+  }
+})
+
+const paramsString = 'q=URLUtils.searchParams&topic=api'
+const searchParams = new URLSearchParams(paramsString)
+
+rhone({
+  method: 'post',
+  url: '/base/post',
+  data: searchParams
+})
