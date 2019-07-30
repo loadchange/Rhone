@@ -1,12 +1,12 @@
-import { RhoneRequestConfig } from './types'
+import { RhoneRequestConfig, RhonePromise } from './types'
 import xhr from './xhr'
 import { buildURL } from './helpers/url'
 import { transformRequest } from './helpers/data'
 import { processHeaders } from './helpers/headers'
 
-function rhone(config: RhoneRequestConfig): void {
+function rhone(config: RhoneRequestConfig): RhonePromise {
   processConfig(config)
-  xhr(config)
+  return xhr(config)
 }
 
 function processConfig(config: RhoneRequestConfig): void {

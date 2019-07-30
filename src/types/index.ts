@@ -20,4 +20,16 @@ export interface RhoneRequestConfig {
   data?: any
   params?: any
   headers?: any
+  responseType?: XMLHttpRequestResponseType
 }
+
+export interface RhoneResponse {
+  data: any
+  status: number
+  statusText: string
+  headers: any
+  config: RhoneRequestConfig
+  request: any
+}
+
+export interface RhonePromise extends Promise<RhoneResponse> {}
