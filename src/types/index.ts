@@ -21,6 +21,7 @@ export interface RhoneRequestConfig {
   params?: any
   headers?: any
   responseType?: XMLHttpRequestResponseType
+  timeout?: number
 }
 
 export interface RhoneResponse {
