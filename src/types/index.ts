@@ -34,3 +34,11 @@ export interface RhoneResponse {
 }
 
 export interface RhonePromise extends Promise<RhoneResponse> {}
+
+export interface RhoneError extends Error {
+  isRhoneError: boolean
+  config: RhoneRequestConfig
+  code?: string | number
+  request?: any
+  response?: RhoneResponse
+}
