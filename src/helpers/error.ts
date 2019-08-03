@@ -3,14 +3,14 @@ import { RhoneRequestConfig, RhoneResponse } from '../types'
 export class RhoneError extends Error {
   isRhoneError: boolean
   config: RhoneRequestConfig
-  code?: string | number
+  code?: string | number | null
   request?: any
   response?: RhoneResponse
 
   constructor(
     message: string,
     config: RhoneRequestConfig,
-    code?: string | number,
+    code?: string | number | null,
     request?: any,
     response?: RhoneResponse
   ) {
@@ -28,7 +28,7 @@ export class RhoneError extends Error {
 export function createError(
   message: string,
   config: RhoneRequestConfig,
-  code?: string | number,
+  code?: string | number | null,
   request?: any,
   response?: RhoneResponse
 ) {

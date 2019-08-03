@@ -1,9 +1,14 @@
-import rhone from '../../src'
+import rhone, { RhoneError } from '../../src'
 
 rhone({
   method: 'get',
   url: '/error/get1'
-}).then(res => console.log(6, res)).catch(e => console.error(6, e))
+}).then(res => console.log(res)).catch((e: RhoneError) => {
+  console.log(e.message)
+  console.log(e.code)
+  console.log(e.config)
+  console.log(e.request)
+})
 
 rhone({
   method: 'get',
