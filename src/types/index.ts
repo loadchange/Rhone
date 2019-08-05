@@ -15,7 +15,7 @@ export type Method =
   | 'PATCH'
 
 export interface RhoneRequestConfig {
-  url: string
+  url?: string
   method?: Method
   data?: any
   params?: any
@@ -41,4 +41,26 @@ export interface RhoneError extends Error {
   code?: string | number
   request?: any
   response?: RhoneResponse
+}
+
+export interface Rhone {
+  request(config: RhoneRequestConfig): RhonePromise
+
+  get(url: string, config?: RhoneRequestConfig): RhonePromise
+
+  delete(url: string, config?: RhoneRequestConfig): RhonePromise
+
+  head(url: string, config?: RhoneRequestConfig): RhonePromise
+
+  options(url: string, config?: RhoneRequestConfig): RhonePromise
+
+  post(url: string, data?: any, config?: RhoneRequestConfig): RhonePromise
+
+  put(url: string, data?: any, config?: RhoneRequestConfig): RhonePromise
+
+  patch(url: string, data?: any, config?: RhoneRequestConfig): RhonePromise
+}
+
+export interface RhoneInstance extends Rhone {
+  (config: RhoneRequestConfig): RhonePromise
 }
