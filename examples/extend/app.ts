@@ -39,3 +39,22 @@ rhone.delete('/extend/delete', {
 rhone.post('/extend/post', { a: 1, b: 2 })
 rhone.put('/extend/put', { a: 3, b: 4 })
 rhone.patch('/extend/patch', { a: 5, b: 6 })
+
+
+rhone({
+  method: 'get',
+  url: '/extend/get',
+  params: {
+    id: 200
+  }
+})
+
+rhone('/extend/post', {
+  method: 'post',
+  data: {
+    id: 201
+  }
+})
+
+
+rhone('/extend/get')

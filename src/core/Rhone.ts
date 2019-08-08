@@ -2,8 +2,19 @@ import { RhonePromise, RhoneRequestConfig } from '../types'
 import dispatchRequest from './dispatchRequest'
 
 export default class Rhone {
-  request(config: RhoneRequestConfig): RhonePromise {
-    return dispatchRequest(config)
+  request(config: RhoneRequestConfig): RhonePromise
+  request(ur: string, config?: RhoneRequestConfig): RhonePromise
+
+  request(): RhonePromise {
+    if (arguments.length === 1) {
+      const [arg] = Array.from(arguments)
+      return dispatchRequest(typeof arg === 'string' ? { url: arg } : arg)
+    }
+    if (arguments.length === 2) {
+      const [url, config] = Array.from(arguments)
+      return dispatchRequest(Object.assign({}, config, { url }))
+    }
+    throw new Error('arguments error')
   }
 
   get(url: string, config?: RhoneRequestConfig): RhonePromise {

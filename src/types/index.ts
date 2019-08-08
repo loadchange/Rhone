@@ -63,4 +63,6 @@ export interface Rhone {
 
 export interface RhoneInstance extends Rhone {
   (config: RhoneRequestConfig): RhonePromise
+
+  (url: string, config?: RhoneRequestConfig): RhonePromise
 }
