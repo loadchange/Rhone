@@ -24,8 +24,8 @@ export interface RhoneRequestConfig {
   timeout?: number
 }
 
-export interface RhoneResponse {
-  data: any
+export interface RhoneResponse<T = any> {
+  data: T
   status: number
   statusText: string
   headers: any
@@ -33,7 +33,7 @@ export interface RhoneResponse {
   request: any
 }
 
-export interface RhonePromise extends Promise<RhoneResponse> {}
+export interface RhonePromise<T = any> extends Promise<RhoneResponse<T>> {}
 
 export interface RhoneError extends Error {
   isRhoneError: boolean
@@ -44,25 +44,25 @@ export interface RhoneError extends Error {
 }
 
 export interface Rhone {
-  request(config: RhoneRequestConfig): RhonePromise
+  request<T = any>(config: RhoneRequestConfig): RhonePromise<T>
 
-  get(url: string, config?: RhoneRequestConfig): RhonePromise
+  get<T = any>(url: string, config?: RhoneRequestConfig): RhonePromise<T>
 
-  delete(url: string, config?: RhoneRequestConfig): RhonePromise
+  delete<T = any>(url: string, config?: RhoneRequestConfig): RhonePromise<T>
 
-  head(url: string, config?: RhoneRequestConfig): RhonePromise
+  head<T = any>(url: string, config?: RhoneRequestConfig): RhonePromise<T>
 
-  options(url: string, config?: RhoneRequestConfig): RhonePromise
+  options<T = any>(url: string, config?: RhoneRequestConfig): RhonePromise<T>
 
-  post(url: string, data?: any, config?: RhoneRequestConfig): RhonePromise
+  post<T = any>(url: string, data?: any, config?: RhoneRequestConfig): RhonePromise<T>
 
-  put(url: string, data?: any, config?: RhoneRequestConfig): RhonePromise
+  put<T = any>(url: string, data?: any, config?: RhoneRequestConfig): RhonePromise<T>
 
-  patch(url: string, data?: any, config?: RhoneRequestConfig): RhonePromise
+  patch<T = any>(url: string, data?: any, config?: RhoneRequestConfig): RhonePromise<T>
 }
 
 export interface RhoneInstance extends Rhone {
-  (config: RhoneRequestConfig): RhonePromise
+  <T = any>(config: RhoneRequestConfig): RhonePromise<T>
 
-  (url: string, config?: RhoneRequestConfig): RhonePromise
+  <T = any>(url: string, config?: RhoneRequestConfig): RhonePromise<T>
 }

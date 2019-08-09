@@ -81,4 +81,12 @@ function registerExtendRouter() {
   router.post('/extend/post', (req, res) => res.json(req.body))
   router.put('/extend/put', (req, res) => res.json(req.body))
   router.patch('/extend/patch', (req, res) => res.json(req.body))
+  router.get('/extend/user', (req, res) => res.json({
+    code: 0,
+    message: 'ok',
+    result: {
+      name: 'jack',
+      age: 18
+    }
+  }))
 }
