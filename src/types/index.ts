@@ -44,6 +44,11 @@ export interface RhoneError extends Error {
 }
 
 export interface Rhone {
+  interceptors: {
+    request: RhoneInterceptorManager<RhoneRequestConfig>
+    response: RhoneInterceptorManager<RhoneResponse>
+  }
+
   request<T = any>(config: RhoneRequestConfig): RhonePromise<T>
 
   get<T = any>(url: string, config?: RhoneRequestConfig): RhonePromise<T>
@@ -68,7 +73,7 @@ export interface RhoneInstance extends Rhone {
 }
 
 export interface RhoneInterceptorManager<T> {
-  use(resolved: ResolvedFn<T>, rejected: RejectedFn): number
+  use(resolved: ResolvedFn<T>, rejected?: RejectedFn): number
 
   eject(id: number): void
 }

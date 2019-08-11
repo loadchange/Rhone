@@ -1,20 +1,62 @@
-import { RhonePromise, RhoneRequestConfig } from '../types'
+import { RejectedFn, ResolvedFn, RhonePromise, RhoneRequestConfig, RhoneResponse } from '../types'
 import dispatchRequest from './dispatchRequest'
+import InterceptorManager from './InterceptorManager'
+
+interface Interceptors {
+  request: InterceptorManager<RhoneRequestConfig>
+  response: InterceptorManager<RhoneResponse>
+}
+
+interface PromiseChain<T> {
+  resolved: ResolvedFn<T> | ((config: RhoneRequestConfig) => RhonePromise)
+  rejected?: RejectedFn
+}
 
 export default class Rhone {
+  interceptors: Interceptors
+
+  constructor() {
+    this.interceptors = {
+      request: new InterceptorManager<RhoneRequestConfig>(),
+      response: new InterceptorManager<RhoneResponse>()
+    }
+  }
+
   request(config: RhoneRequestConfig): RhonePromise
   request(ur: string, config?: RhoneRequestConfig): RhonePromise
 
   request(): RhonePromise {
+    let rhoneConfig = {}
     if (arguments.length === 1) {
       const [arg] = Array.from(arguments)
-      return dispatchRequest(typeof arg === 'string' ? { url: arg } : arg)
+      rhoneConfig = typeof arg === 'string' ? { url: arg } : arg
     }
     if (arguments.length === 2) {
       const [url, config] = Array.from(arguments)
-      return dispatchRequest(Object.assign({}, config, { url }))
+      rhoneConfig = Object.assign({}, config, { url })
     }
-    throw new Error('arguments error')
+    const chain: PromiseChain<any>[] = [
+      {
+        resolved: dispatchRequest,
+        rejected: undefined
+      }
+    ]
+
+    this.interceptors.request.forEach(interceptor => {
+      chain.unshift(interceptor)
+    })
+
+    this.interceptors.response.forEach(interceptor => {
+      chain.push(interceptor)
+    })
+
+    let promise = Promise.resolve(rhoneConfig)
+
+    while (chain.length) {
+      const { resolved, rejected } = chain.shift()!
+      promise = promise.then(resolved, rejected)
+    }
+    return promise as RhonePromise
   }
 
   get(url: string, config?: RhoneRequestConfig): RhonePromise {
