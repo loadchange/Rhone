@@ -44,6 +44,7 @@ export interface RhoneError extends Error {
 }
 
 export interface Rhone {
+  defaults: RhoneRequestConfig
   interceptors: {
     request: RhoneInterceptorManager<RhoneRequestConfig>
     response: RhoneInterceptorManager<RhoneResponse>

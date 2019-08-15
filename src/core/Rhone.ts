@@ -13,9 +13,11 @@ interface PromiseChain<T> {
 }
 
 export default class Rhone {
+  defaults: RhoneRequestConfig
   interceptors: Interceptors
 
-  constructor() {
+  constructor(initConfig: RhoneRequestConfig) {
+    this.defaults = initConfig
     this.interceptors = {
       request: new InterceptorManager<RhoneRequestConfig>(),
       response: new InterceptorManager<RhoneResponse>()
