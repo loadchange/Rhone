@@ -22,6 +22,8 @@ export interface RhoneRequestConfig {
   headers?: any
   responseType?: XMLHttpRequestResponseType
   timeout?: number
+
+  [propName: string]: any
 }
 
 export interface RhoneResponse<T = any> {
