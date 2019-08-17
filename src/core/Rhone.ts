@@ -1,6 +1,7 @@
 import { RejectedFn, ResolvedFn, RhonePromise, RhoneRequestConfig, RhoneResponse } from '../types'
 import dispatchRequest from './dispatchRequest'
 import InterceptorManager from './InterceptorManager'
+import mergeConfig from './mergeConfig'
 
 interface Interceptors {
   request: InterceptorManager<RhoneRequestConfig>
@@ -37,6 +38,7 @@ export default class Rhone {
       const [url, config] = Array.from(arguments)
       rhoneConfig = Object.assign({}, config, { url })
     }
+    rhoneConfig = mergeConfig(this.defaults, rhoneConfig)
     const chain: PromiseChain<any>[] = [
       {
         resolved: dispatchRequest,
