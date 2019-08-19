@@ -2,7 +2,7 @@ import { RhoneRequestConfig, RhoneResponse, RhonePromise } from '../types'
 import xhr from './xhr'
 import { buildURL } from '../helpers/url'
 import { transformRequest, transformResponse } from '../helpers/data'
-import { processHeaders } from '../helpers/headers'
+import { flattenHeaders, processHeaders } from '../helpers/headers'
 
 export default function dispatchRequest(config: RhoneRequestConfig): RhonePromise {
   processConfig(config)
@@ -13,6 +13,7 @@ function processConfig(config: RhoneRequestConfig): void {
   config.url = transformURL(config)
   config.headers = transformHeaders(config)
   config.data = transformData(config)
+  config.headers = flattenHeaders(config.headers, config.method!)
 }
 
 function transformURL(config: RhoneRequestConfig): string {
