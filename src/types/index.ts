@@ -22,6 +22,8 @@ export interface RhoneRequestConfig {
   headers?: any
   responseType?: XMLHttpRequestResponseType
   timeout?: number
+  transformRequest?: RhoneTransformer | RhoneTransformer[]
+  transformResponse?: RhoneTransformer | RhoneTransformer[]
 
   [propName: string]: any
 }
@@ -87,4 +89,8 @@ export interface ResolvedFn<T> {
 
 export interface RejectedFn {
   (error: any): any
+}
+
+export interface RhoneTransformer {
+  (data: any, headers?: any): any
 }

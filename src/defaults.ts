@@ -1,4 +1,6 @@
 import { RhoneRequestConfig } from './types'
+import { processHeaders } from './helpers/headers'
+import { transformRequest, transformResponse } from './helpers/data'
 
 const defaults: RhoneRequestConfig = {
   method: 'get',
@@ -7,7 +9,18 @@ const defaults: RhoneRequestConfig = {
     common: {
       Accept: 'application/json, text/plain, */*'
     }
-  }
+  },
+  transformRequest: [
+    (data: any, headers: any): any => {
+      processHeaders(data, headers)
+      return transformRequest(data)
+    }
+  ],
+  transformResponse: [
+    (data: any): any => {
+      return transformResponse(data)
+    }
+  ]
 }
 
 const methodsNoData = ['head', 'get', 'delete', 'options']
