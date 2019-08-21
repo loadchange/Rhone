@@ -12,7 +12,7 @@ const defaults: RhoneRequestConfig = {
   },
   transformRequest: [
     (data: any, headers: any): any => {
-      processHeaders(data, headers)
+      processHeaders(headers, data)
       return transformRequest(data)
     }
   ],
