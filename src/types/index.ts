@@ -77,6 +77,10 @@ export interface RhoneInstance extends Rhone {
   <T = any>(url: string, config?: RhoneRequestConfig): RhonePromise<T>
 }
 
+export interface RhoneStatic extends RhoneInstance {
+  create(config?: RhoneRequestConfig): RhoneInstance
+}
+
 export interface RhoneInterceptorManager<T> {
   use(resolved: ResolvedFn<T>, rejected?: RejectedFn): number
 
