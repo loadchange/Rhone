@@ -24,6 +24,7 @@ export interface RhoneRequestConfig {
   timeout?: number
   transformRequest?: RhoneTransformer | RhoneTransformer[]
   transformResponse?: RhoneTransformer | RhoneTransformer[]
+  cancelToken?: CancelToken
 
   [propName: string]: any
 }
@@ -97,4 +98,17 @@ export interface RejectedFn {
 
 export interface RhoneTransformer {
   (data: any, headers?: any): any
+}
+
+export interface CancelToken {
+  promise: Promise<string>
+  reason?: string
+}
+
+export interface Canceler {
+  (message?: string): void
+}
+
+export interface CancelExecutor {
+  (cancel: Canceler): void
 }
