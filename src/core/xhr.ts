@@ -4,7 +4,7 @@ import { createError } from '../helpers/error'
 
 export default function xhr(config: RhoneRequestConfig): RhonePromise {
   return new Promise((resolve, reject) => {
-    const { data = null, url, method = 'get', headers, responseType, timeout } = config
+    const { data = null, url, method = 'get', headers, responseType, timeout, cancelToken } = config
     const request = new XMLHttpRequest()
     if (responseType) {
       request.responseType = responseType
@@ -48,6 +48,14 @@ export default function xhr(config: RhoneRequestConfig): RhonePromise {
       }
       request.setRequestHeader(name, headers[name])
     })
+
+    if (cancelToken) {
+      cancelToken.promise.then(reason => {
+        request.abort()
+        reject(reason)
+      })
+    }
+
     request.send(data)
 
     function handleResponse(response: RhoneResponse): void {

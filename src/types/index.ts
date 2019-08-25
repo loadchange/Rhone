@@ -112,3 +112,14 @@ export interface Canceler {
 export interface CancelExecutor {
   (cancel: Canceler): void
 }
+
+export interface CancelTokenSource {
+  token: CancelToken
+  cancel: Canceler
+}
+
+export interface CancelTokenStatic {
+  new (executor: CancelExecutor): CancelToken
+
+  source(): CancelTokenSource
+}
