@@ -5,6 +5,7 @@ import { flattenHeaders } from '../helpers/headers'
 import transform from './transform'
 
 export default function dispatchRequest(config: RhoneRequestConfig): RhonePromise {
+  throwIfCancellationRequested(config)
   processConfig(config)
   return xhr(config).then(res => transformResponseData(res))
 }
@@ -23,4 +24,10 @@ function transformURL(config: RhoneRequestConfig): string {
 function transformResponseData(response: RhoneResponse): RhoneResponse {
   response.data = transform(response.data, response.headers, response.config.transformResponse)
   return response
+}
+
+function throwIfCancellationRequested(config: RhoneRequestConfig): void {
+  if (config.cancelToken) {
+    config.cancelToken.throwIfRequested()
+  }
 }

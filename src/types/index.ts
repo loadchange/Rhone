@@ -80,6 +80,10 @@ export interface RhoneInstance extends Rhone {
 
 export interface RhoneStatic extends RhoneInstance {
   create(config?: RhoneRequestConfig): RhoneInstance
+
+  CancelToken: CancelTokenStatic
+  Cancel: CancelStatic
+  isCancel: (value: any) => boolean
 }
 
 export interface RhoneInterceptorManager<T> {
@@ -101,8 +105,10 @@ export interface RhoneTransformer {
 }
 
 export interface CancelToken {
-  promise: Promise<string>
-  reason?: string
+  promise: Promise<Cancel>
+  reason?: Cancel
+
+  throwIfRequested(): void
 }
 
 export interface Canceler {
@@ -122,4 +128,12 @@ export interface CancelTokenStatic {
   new (executor: CancelExecutor): CancelToken
 
   source(): CancelTokenSource
+}
+
+export interface Cancel {
+  message?: string
+}
+
+export interface CancelStatic {
+  new (message?: string): Cancel
 }
