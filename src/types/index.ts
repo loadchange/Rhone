@@ -25,6 +25,7 @@ export interface RhoneRequestConfig {
   transformRequest?: RhoneTransformer | RhoneTransformer[]
   transformResponse?: RhoneTransformer | RhoneTransformer[]
   cancelToken?: CancelToken
+  withCredentials?: boolean
 
   [propName: string]: any
 }
