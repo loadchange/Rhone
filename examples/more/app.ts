@@ -12,3 +12,11 @@ rhone.post('http://127.0.0.1:8088/more/server2', {}, {
   console.log(res)
 })
 
+const instance = rhone.create({
+  xsrfCookieName: 'XSRF-TOKEN-D',
+  xsrfHeaderName: 'X-XSRF-TOKEN-D'
+})
+
+instance.get('/more/get').then(res => {
+  console.log(res)
+})
