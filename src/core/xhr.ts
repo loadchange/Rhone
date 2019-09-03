@@ -19,7 +19,8 @@ export default function xhr(config: RhoneRequestConfig): RhonePromise {
       xsrfHeaderName,
       xsrfCookieName,
       onDownloadProgress,
-      onUploadProgress
+      onUploadProgress,
+      auth
     } = config
     const request = new XMLHttpRequest()
 
@@ -91,6 +92,9 @@ export default function xhr(config: RhoneRequestConfig): RhonePromise {
         if (xsrfValue && xsrfHeaderName) {
           headers[xsrfHeaderName] = xsrfValue
         }
+      }
+      if (auth) {
+        headers['Authorization'] = ['Basic', btoa(Object.values(auth).join(':'))].join(' ')
       }
       Object.keys(headers).forEach(name => {
         if (data === null && name.toLowerCase() === 'content-type') {
