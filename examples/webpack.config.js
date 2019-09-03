@@ -24,7 +24,7 @@ module.exports = {
       use: [{
         loader: 'tslint-loader'
       }]
-    },{
+    }, {
       test: /\.tsx?$/,
       use: [{
         loader: 'ts-loader',
@@ -32,6 +32,9 @@ module.exports = {
           transpileOnly: true
         }
       }]
+    }, {
+      test: /\.css?$/,
+      use: ['style-loader', 'css-loader']
     }]
   },
   resolve: {
