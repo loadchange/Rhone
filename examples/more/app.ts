@@ -1,4 +1,4 @@
-import rhone from '../../src'
+import rhone, { RhoneError } from '../../src'
 import 'nprogress/nprogress.css'
 import NProgress from 'nprogress'
 
@@ -83,11 +83,28 @@ import NProgress from 'nprogress'
 
 // auth
 
-rhone.post('/more/post', { a: 1 }, {
-  auth: {
-    username: 'Yee1',
-    password: '123456'
+// rhone.post('/more/post', { a: 1 }, {
+//   auth: {
+//     username: 'Yee1',
+//     password: '123456'
+//   }
+// }).then(res => {
+//   console.log(res)
+// })
+
+// validateStatus
+rhone.get('/more/304').then(res => {
+  console.log(res)
+}).catch((e: RhoneError) => {
+  console.log(e.message)
+})
+
+rhone.get('/more/304', {
+  validateStatus(status) {
+    return status >= 200 && status < 400
   }
 }).then(res => {
   console.log(res)
+}).catch((e: RhoneError) => {
+  console.log(e.message)
 })

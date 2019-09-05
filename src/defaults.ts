@@ -22,7 +22,10 @@ const defaults: RhoneRequestConfig = {
     (data: any): any => {
       return transformResponse(data)
     }
-  ]
+  ],
+  validateStatus: function(status: number): boolean {
+    return status >= 200 && status < 300
+  }
 }
 
 const methodsNoData = ['head', 'get', 'delete', 'options']
