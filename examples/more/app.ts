@@ -1,6 +1,7 @@
 import rhone, { RhoneError } from '../../src'
 import 'nprogress/nprogress.css'
 import NProgress from 'nprogress'
+import qs from 'qs'
 
 // document.cookie = 'a=b'
 //
@@ -93,18 +94,54 @@ import NProgress from 'nprogress'
 // })
 
 // validateStatus
-rhone.get('/more/304').then(res => {
+// rhone.get('/more/304').then(res => {
+//   console.log(res)
+// }).catch((e: RhoneError) => {
+//   console.log(e.message)
+// })
+//
+// rhone.get('/more/304', {
+//   validateStatus(status) {
+//     return status >= 200 && status < 400
+//   }
+// }).then(res => {
+//   console.log(res)
+// }).catch((e: RhoneError) => {
+//   console.log(e.message)
+// })
+
+//
+
+rhone.get('/more/get', {
+  params: new URLSearchParams('a=b&c=d')
+}).then(res => {
   console.log(res)
-}).catch((e: RhoneError) => {
-  console.log(e.message)
 })
 
-rhone.get('/more/304', {
-  validateStatus(status) {
-    return status >= 200 && status < 400
+rhone.get('/more/get', {
+  params: {
+    a: 1,
+    b: 2,
+    c: ['a', 'b', 'c']
   }
 }).then(res => {
   console.log(res)
-}).catch((e: RhoneError) => {
-  console.log(e.message)
+})
+
+const instance = rhone.create({
+  paramsSerializer(params) {
+    return qs.stringify(params, {
+      arrayFormat: 'brackets'
+    })
+  }
+})
+
+instance.get('/more/get', {
+  params: {
+    a: 1,
+    b: 2,
+    c: ['a', 'b', 'c']
+  }
+}).then(res => {
+  console.log(res)
 })
