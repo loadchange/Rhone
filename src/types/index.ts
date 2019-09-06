@@ -32,6 +32,7 @@ export interface RhoneRequestConfig {
   onUploadProgress?: (e: ProgressEvent) => void
   auth?: RhoneBasicCredentials
   validateStatus?: (status: number) => boolean
+  paramsSerializer?: (params: any) => string
 
   [propName: string]: any
 }

@@ -1,4 +1,4 @@
-import { isDate, isPlainObject } from './util'
+import { isDate, isPlainObject, isURLSearchParams } from './util'
 
 interface URLOrigin {
   protocol: string
@@ -16,35 +16,46 @@ function encode(val: string): string {
     .replace(/%5D/gi, ']')
 }
 
-export function buildURL(url: string, params?: any): string {
+export function buildURL(
+  url: string,
+  params?: any,
+  paramsSerializer?: (params: any) => string
+): string {
   if (!params) {
     return url
   }
-  const parts: string[] = []
-  Object.keys(params).forEach(key => {
-    const val = params[key]
-    if (val === null || typeof val === 'undefined') {
-      return
-    }
-    let values = []
-    if (Array.isArray(val)) {
-      values = val
-      key = [key, '[]'].join('')
-    } else {
-      values = [val]
-    }
-    values.forEach(val => {
-      if (isDate(val)) {
-        val = val.toISOString()
+  let serializedParams
+  if (paramsSerializer) {
+    serializedParams = paramsSerializer(params)
+  } else if (isURLSearchParams(params)) {
+    serializedParams = params.toString()
+  } else {
+    const parts: string[] = []
+    Object.keys(params).forEach(key => {
+      const val = params[key]
+      if (val === null || typeof val === 'undefined') {
+        return
       }
-      if (isPlainObject(val)) {
-        val = JSON.stringify(val)
+      let values = []
+      if (Array.isArray(val)) {
+        values = val
+        key = [key, '[]'].join('')
+      } else {
+        values = [val]
       }
-      parts.push([key, val].map(item => encode(item)).join('='))
+      values.forEach(val => {
+        if (isDate(val)) {
+          val = val.toISOString()
+        }
+        if (isPlainObject(val)) {
+          val = JSON.stringify(val)
+        }
+        parts.push([key, val].map(item => encode(item)).join('='))
+      })
     })
-  })
 
-  let serializedParams = parts.join('&')
+    serializedParams = parts.join('&')
+  }
   const markIndex = url.indexOf('#')
   if (markIndex !== -1) {
     url = url.slice(0, markIndex)
