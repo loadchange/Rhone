@@ -111,37 +111,46 @@ import qs from 'qs'
 // })
 
 //
+//
+// rhone.get('/more/get', {
+//   params: new URLSearchParams('a=b&c=d')
+// }).then(res => {
+//   console.log(res)
+// })
+//
+// rhone.get('/more/get', {
+//   params: {
+//     a: 1,
+//     b: 2,
+//     c: ['a', 'b', 'c']
+//   }
+// }).then(res => {
+//   console.log(res)
+// })
+//
+// const instance = rhone.create({
+//   paramsSerializer(params) {
+//     return qs.stringify(params, {
+//       arrayFormat: 'brackets'
+//     })
+//   }
+// })
+//
+// instance.get('/more/get', {
+//   params: {
+//     a: 1,
+//     b: 2,
+//     c: ['a', 'b', 'c']
+//   }
+// }).then(res => {
+//   console.log(res)
+// })
 
-rhone.get('/more/get', {
-  params: new URLSearchParams('a=b&c=d')
-}).then(res => {
-  console.log(res)
-})
-
-rhone.get('/more/get', {
-  params: {
-    a: 1,
-    b: 2,
-    c: ['a', 'b', 'c']
-  }
-}).then(res => {
-  console.log(res)
-})
+//  baseURL
 
 const instance = rhone.create({
-  paramsSerializer(params) {
-    return qs.stringify(params, {
-      arrayFormat: 'brackets'
-    })
-  }
+  baseURL: 'http://127.0.0.1:8080'
 })
 
-instance.get('/more/get', {
-  params: {
-    a: 1,
-    b: 2,
-    c: ['a', 'b', 'c']
-  }
-}).then(res => {
-  console.log(res)
-})
+instance.get('/more/get')
+instance.get('http://127.0.0.1:8080/more/get')
