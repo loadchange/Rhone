@@ -1,5 +1,5 @@
 import { RejectedFn, ResolvedFn, RhonePromise, RhoneRequestConfig, RhoneResponse } from '../types'
-import dispatchRequest from './dispatchRequest'
+import dispatchRequest, { transformURL } from './dispatchRequest'
 import InterceptorManager from './InterceptorManager'
 import mergeConfig from './mergeConfig'
 
@@ -89,6 +89,11 @@ export default class Rhone {
 
   patch(url: string, data?: any, config?: RhoneRequestConfig): RhonePromise {
     return this.requestMethodWithData('patch', url, data, config)
+  }
+
+  getUri(config?: RhoneRequestConfig): string {
+    config = mergeConfig(this.defaults, config)
+    return transformURL(config)
   }
 
   private requestMethodWithoutData(

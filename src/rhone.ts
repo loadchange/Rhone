@@ -24,4 +24,16 @@ rhone.CancelToken = CancelToken
 rhone.Cancel = Cancel
 rhone.isCancel = isCancel
 
+rhone.all = function all(promises) {
+  return Promise.all(promises)
+}
+
+rhone.spread = function spread(callback) {
+  return function wrap(arr) {
+    return callback.apply(null, arr)
+  }
+}
+
+rhone.Rhone = Rhone
+
 export default rhone

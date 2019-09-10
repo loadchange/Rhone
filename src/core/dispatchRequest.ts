@@ -16,7 +16,7 @@ function processConfig(config: RhoneRequestConfig): void {
   config.headers = flattenHeaders(config.headers, config.method!)
 }
 
-function transformURL(config: RhoneRequestConfig): string {
+export function transformURL(config: RhoneRequestConfig): string {
   let { url, params, paramsSerializer, baseURL } = config
   if (baseURL && !isAbsoluteURL(url!)) {
     url = combineURL(baseURL, url)

@@ -79,6 +79,8 @@ export interface Rhone {
   put<T = any>(url: string, data?: any, config?: RhoneRequestConfig): RhonePromise<T>
 
   patch<T = any>(url: string, data?: any, config?: RhoneRequestConfig): RhonePromise<T>
+
+  getUri(config?: RhoneRequestConfig): string
 }
 
 export interface RhoneInstance extends Rhone {
@@ -87,12 +89,22 @@ export interface RhoneInstance extends Rhone {
   <T = any>(url: string, config?: RhoneRequestConfig): RhonePromise<T>
 }
 
+export interface RhoneClassStatic {
+  new (config: RhoneRequestConfig): Rhone
+}
+
 export interface RhoneStatic extends RhoneInstance {
   create(config?: RhoneRequestConfig): RhoneInstance
 
   CancelToken: CancelTokenStatic
   Cancel: CancelStatic
   isCancel: (value: any) => boolean
+
+  all<T>(promises: Array<T | Promise<T>>): Promise<T[]>
+
+  spread<T, R>(callback: (...args: T[]) => R): (arr: T[]) => R
+
+  Rhone: RhoneClassStatic
 }
 
 export interface RhoneInterceptorManager<T> {

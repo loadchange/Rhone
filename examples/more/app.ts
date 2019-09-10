@@ -148,9 +148,45 @@ import qs from 'qs'
 
 //  baseURL
 
-const instance = rhone.create({
-  baseURL: 'http://127.0.0.1:8080'
+// const instance = rhone.create({
+//   baseURL: 'http://127.0.0.1:8080'
+// })
+//
+// instance.get('/more/get')
+// instance.get('http://127.0.0.1:8080/more/get')
+
+
+// all
+
+function getA() {
+  return rhone.get('/more/A')
+}
+
+function getB() {
+  return rhone.get('/more/B')
+}
+
+rhone.all([getA(), getB()])
+  .then(
+    rhone.spread(
+      function(resA, resB) {
+        console.log(resA.data)
+        console.log(resB.data)
+      }
+    )
+  )
+
+rhone.all([getA(), getB()]).then(([resA, resB]) => {
+  console.log(resA.data)
+  console.log(resB.data)
 })
 
-instance.get('/more/get')
-instance.get('http://127.0.0.1:8080/more/get')
+const fakeConfig = {
+  baseURL: 'https://www.github.com/',
+  url: '/users/LoadChange',
+  params: {
+    id: 100,
+    username: 'Asa'
+  }
+}
+console.log(rhone.getUri(fakeConfig))
