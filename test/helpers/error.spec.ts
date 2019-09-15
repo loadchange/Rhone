@@ -1,4 +1,3 @@
-import cookie from '../../src/helpers/cookie'
 import { RhoneRequestConfig, RhoneResponse } from '../../src/types'
 import { createError } from '../../src/helpers/error'
 
