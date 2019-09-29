@@ -108,9 +108,11 @@ describe('instance', () => {
       request.respondWith({
         status: 200
       })
-      expect(response.request.timeout).toBe(0)
-      expect(response.request.withCredentials).toBeTruthy()
-      done()
+      setTimeout(() => {
+        expect(response.config.timeout).toBe(0)
+        expect(response.config.withCredentials).toBeTruthy()
+        done()
+      }, 100)
     })
   })
 

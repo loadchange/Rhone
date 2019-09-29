@@ -29,7 +29,7 @@ export default class Rhone {
   request(ur: string, config?: RhoneRequestConfig): RhonePromise
 
   request(): RhonePromise {
-    let rhoneConfig = {}
+    let rhoneConfig = Object.create(null)
     if (arguments.length === 1) {
       const [arg] = Array.from(arguments)
       rhoneConfig = typeof arg === 'string' ? { url: arg } : arg
@@ -39,6 +39,7 @@ export default class Rhone {
       rhoneConfig = Object.assign({}, config, { url })
     }
     rhoneConfig = mergeConfig(this.defaults, rhoneConfig)
+    rhoneConfig.method = rhoneConfig.method.toLowerCase()
     const chain: PromiseChain<any>[] = [
       {
         resolved: dispatchRequest,

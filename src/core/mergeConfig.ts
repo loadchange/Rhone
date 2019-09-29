@@ -20,9 +20,8 @@ function deepMergeStart(val1: any, val2: any): any {
     return val2
   } else if (isPlainObject(val1)) {
     return deepMerge(val1)
-  } else if (typeof val1 !== 'undefined') {
-    return val1
   }
+  return val1
 }
 
 const startKeysFromVal2 = ['url', 'params', 'data']

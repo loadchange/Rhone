@@ -7,6 +7,7 @@ export class RhoneError extends Error {
   request?: any
   response?: RhoneResponse
 
+  /* istanbul ignore next */
   constructor(
     message: string,
     config: RhoneRequestConfig,

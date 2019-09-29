@@ -1,7 +1,7 @@
 import rhone, { RhoneError, RhoneResponse } from '../src'
 import { getAjaxRequest } from './helper'
 
-describe('requests', () => {
+describe('headers', () => {
   beforeEach(() => {
     jasmine.Ajax.install()
   })
@@ -32,9 +32,16 @@ describe('requests', () => {
     })
   })
 
-  test('should reject on network errors', () => {
-    const resolveSpy = jest.fn((res: RhoneResponse) => res)
-    const rejectSpy = jest.fn((e: RhoneError) => e)
+  test('should reject on network errors', done => {
+    const resolveSpy = jest.fn((res: RhoneResponse) => {
+      return res
+    })
+
+    const rejectSpy = jest.fn((e: RhoneError) => {
+      return e
+    })
+
+    jasmine.Ajax.uninstall()
 
     rhone('/foo')
       .then(resolveSpy)
@@ -47,13 +54,11 @@ describe('requests', () => {
       expect(reason instanceof Error).toBeTruthy()
       expect((reason as RhoneError).message).toBe('Network Error')
       expect(reason.request).toEqual(expect.any(XMLHttpRequest))
-    }
 
-    return getAjaxRequest().then(request => {
-      request.respondWith({
-        status: 0
-      })
-    })
+      jasmine.Ajax.install()
+
+      done()
+    }
   })
 
   test('should reject when request timeout', done => {
@@ -234,6 +239,38 @@ describe('requests', () => {
       })
     return getAjaxRequest().then(request => {
       expect(request.requestHeaders['Content-Type']).toBe('application/json')
+    })
+  })
+
+  test('should support array buffer response', done => {
+    let response: RhoneResponse
+
+    function str2ab(str: string) {
+      const buff = new ArrayBuffer(str.length * 2)
+      const view = new Uint16Array(buff)
+      for (let i = 0; i < str.length; i++) {
+        view[i] = str.charCodeAt(i)
+      }
+      return buff
+    }
+
+    rhone('/foo', {
+      responseType: 'arraybuffer'
+    }).then(data => {
+      response = data
+    })
+
+    getAjaxRequest().then(request => {
+      request.respondWith({
+        status: 200,
+        // @ts-ignore
+        response: str2ab('Hello world')
+      })
+
+      setTimeout(() => {
+        expect(response.data.byteLength).toBe(22)
+        done()
+      }, 100)
     })
   })
 })

@@ -1,4 +1,4 @@
-import rhone, { RhoneError, RhoneResponse } from '../src'
+import rhone from '../src'
 import { getAjaxRequest } from './helper'
 
 function testHeaderValue(headers: any, key: string, val?: string) {

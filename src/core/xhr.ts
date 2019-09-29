@@ -10,8 +10,8 @@ export default function xhr(config: RhoneRequestConfig): RhonePromise {
     const {
       data = null,
       url,
-      method = 'get',
-      headers,
+      method,
+      headers = {},
       responseType,
       timeout,
       cancelToken,
@@ -25,7 +25,7 @@ export default function xhr(config: RhoneRequestConfig): RhonePromise {
     } = config
     const request = new XMLHttpRequest()
 
-    request.open(method.toUpperCase(), url!, true)
+    request.open(method!.toUpperCase(), url!, true)
 
     configureRequest()
 
@@ -58,7 +58,8 @@ export default function xhr(config: RhoneRequestConfig): RhonePromise {
           return
         }
         const responseHeaders = parseHeaders(request.getAllResponseHeaders())
-        const responseData = responseType !== 'text' ? request.response : request.responseText
+        const responseData =
+          responseType && responseType !== 'text' ? request.response : request.responseText
         const response: RhoneResponse = {
           data: responseData,
           status: request.status,
