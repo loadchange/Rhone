@@ -1,8 +1,13 @@
 {
   "name": "rhone",
-  "version": "0.2.8",
-  "description": "",
-  "keywords": [],
+  "version": "0.2.10",
+  "description": "Promise based HTTP client for the browser",
+  "keywords": [
+    "xhr",
+    "http",
+    "ajax",
+    "promise"
+  ],
   "main": "dist/rhone.umd.js",
   "module": "dist/rhone.es5.js",
   "typings": "dist/types/rhone.d.ts",

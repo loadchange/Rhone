@@ -1,169 +1,709 @@
-# Rhone
+# rhone
 
-[![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
-[![Greenkeeper badge](https://badges.greenkeeper.io/alexjoverm/typescript-library-starter.svg)](https://greenkeeper.io/)
-[![Travis](https://img.shields.io/travis/alexjoverm/typescript-library-starter.svg)](https://travis-ci.org/alexjoverm/typescript-library-starter)
-[![Coveralls](https://img.shields.io/coveralls/alexjoverm/typescript-library-starter.svg)](https://coveralls.io/github/alexjoverm/typescript-library-starter)
-[![Dev Dependencies](https://david-dm.org/alexjoverm/typescript-library-starter/dev-status.svg)](https://david-dm.org/alexjoverm/typescript-library-starter?type=dev)
-[![Donate](https://img.shields.io/badge/donate-paypal-blue.svg)](https://paypal.me/AJoverMorales)
+[![npm version](https://img.shields.io/npm/v/rhone.svg?style=flat-square)](https://www.npmjs.org/package/rhone)
+[![build status](https://img.shields.io/travis/loadchange/rhone/master.svg?style=flat-square)](https://travis-ci.org/loadchange/rhone)
+[![code coverage](https://img.shields.io/coveralls/mzabriskie/rhone.svg?style=flat-square)](https://coveralls.io/r/mzabriskie/rhone)
+[![install size](https://packagephobia.now.sh/badge?p=rhone)](https://packagephobia.now.sh/result?p=rhone)
+[![npm downloads](https://img.shields.io/npm/dm/rhone.svg?style=flat-square)](http://npm-stat.com/charts.html?package=rhone)
+[![gitter chat](https://img.shields.io/gitter/room/mzabriskie/rhone.svg?style=flat-square)](https://gitter.im/mzabriskie/rhone)
+[![code helpers](https://www.codetriage.com/loadchange/rhone/badges/users.svg)](https://www.codetriage.com/loadchange/rhone)
 
-A starter project that makes creating a TypeScript library extremely easy.
+Promise based HTTP client for the browser and node.js
 
-![](https://i.imgur.com/opUmHp0.png)
+## Features
 
-### Usage
+- Make [XMLHttpRequests](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest) from the browser
+- Make [http](http://nodejs.org/api/http.html) requests from node.js
+- Supports the [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) API
+- Intercept request and response
+- Transform request and response data
+- Cancel requests
+- Automatic transforms for JSON data
+- Client side support for protecting against [XSRF](http://en.wikipedia.org/wiki/Cross-site_request_forgery)
 
-```bash
-git clone https://github.com/alexjoverm/typescript-library-starter.git YOURFOLDERNAME
-cd YOURFOLDERNAME
+## Browser Support
 
-# Run npm install and write your library name when asked. That's all!
-npm install
-```
+![Chrome](https://raw.github.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png) | ![Firefox](https://raw.github.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png) | ![Safari](https://raw.github.com/alrra/browser-logos/master/src/safari/safari_48x48.png) | ![Opera](https://raw.github.com/alrra/browser-logos/master/src/opera/opera_48x48.png) | ![Edge](https://raw.github.com/alrra/browser-logos/master/src/edge/edge_48x48.png) | ![IE](https://raw.github.com/alrra/browser-logos/master/src/archive/internet-explorer_9-11/internet-explorer_9-11_48x48.png) |
+--- | --- | --- | --- | --- | --- |
+Latest ✔ | Latest ✔ | Latest ✔ | Latest ✔ | Latest ✔ | 11 ✔ |
 
-**Start coding!** `package.json` and entry files are already set up for you, so don't worry about linking to your main file, typings, etc. Just keep those files with the same name.
+[![Browser Matrix](https://saucelabs.com/open_sauce/build_matrix/rhone.svg)](https://saucelabs.com/u/rhone)
 
-### Features
+## Installing
 
- - Zero-setup. After running `npm install` things will setup for you :wink:
- - **[RollupJS](https://rollupjs.org/)** for multiple optimized bundles following the [standard convention](http://2ality.com/2017/04/setting-up-multi-platform-packages.html) and [Tree-shaking](https://alexjoverm.github.io/2017/03/06/Tree-shaking-with-Webpack-2-TypeScript-and-Babel/)
- - Tests, coverage and interactive watch mode using **[Jest](http://facebook.github.io/jest/)**
- - **[Prettier](https://github.com/prettier/prettier)** and **[TSLint](https://palantir.github.io/tslint/)** for code formatting and consistency
- - **Docs automatic generation and deployment** to `gh-pages`, using **[TypeDoc](http://typedoc.org/)**
- - Automatic types `(*.d.ts)` file generation
- - **[Travis](https://travis-ci.org)** integration and **[Coveralls](https://coveralls.io/)** report
- - (Optional) **Automatic releases and changelog**, using [Semantic release](https://github.com/semantic-release/semantic-release), [Commitizen](https://github.com/commitizen/cz-cli), [Conventional changelog](https://github.com/conventional-changelog/conventional-changelog) and [Husky](https://github.com/typicode/husky) (for the git hooks)
-
-### Importing library
-
-You can import the generated bundle to use the whole library generated by this starter:
-
-```javascript
-import myLib from 'mylib'
-```
-
-Additionally, you can import the transpiled modules from `dist/lib` in case you have a modular library:
-
-```javascript
-import something from 'mylib/dist/lib/something'
-```
-
-### NPM scripts
-
- - `npm t`: Run test suite
- - `npm start`: Run `npm run build` in watch mode
- - `npm run test:watch`: Run test suite in [interactive watch mode](http://facebook.github.io/jest/docs/cli.html#watch)
- - `npm run test:prod`: Run linting and generate coverage
- - `npm run build`: Generate bundles and typings, create docs
- - `npm run lint`: Lints code
- - `npm run commit`: Commit using conventional commit style ([husky](https://github.com/typicode/husky) will tell you to use it if you haven't :wink:)
-
-### Excluding peerDependencies
-
-On library development, one might want to set some peer dependencies, and thus remove those from the final bundle. You can see in [Rollup docs](https://rollupjs.org/#peer-dependencies) how to do that.
-
-Good news: the setup is here for you, you must only include the dependency name in `external` property within `rollup.config.js`. For example, if you want to exclude `lodash`, just write there `external: ['lodash']`.
-
-### Automatic releases
-
-_**Prerequisites**: you need to create/login accounts and add your project to:_
- - [npm](https://www.npmjs.com/)
- - [Travis CI](https://travis-ci.org)
- - [Coveralls](https://coveralls.io)
-
-_**Prerequisite for Windows**: Semantic-release uses
-**[node-gyp](https://github.com/nodejs/node-gyp)** so you will need to
-install
-[Microsoft's windows-build-tools](https://github.com/felixrieseberg/windows-build-tools)
-using this command:_
+Using npm:
 
 ```bash
-npm install --global --production windows-build-tools
+$ npm install rhone
 ```
 
-#### Setup steps
-
-Follow the console instructions to install semantic release and run it (answer NO to "Do you want a `.travis.yml` file with semantic-release setup?").
-
-_Note: make sure you've setup `repository.url` in your `package.json` file_
+Using bower:
 
 ```bash
-npm install -g semantic-release-cli
-semantic-release-cli setup
-# IMPORTANT!! Answer NO to "Do you want a `.travis.yml` file with semantic-release setup?" question. It is already prepared for you :P
+$ bower install rhone
 ```
 
-From now on, you'll need to use `npm run commit`, which is a convenient way to create conventional commits.
+Using yarn:
 
-Automatic releases are possible thanks to [semantic release](https://github.com/semantic-release/semantic-release), which publishes your code automatically on [github](https://github.com/) and [npm](https://www.npmjs.com/), plus generates automatically a changelog. This setup is highly influenced by [Kent C. Dodds course on egghead.io](https://egghead.io/courses/how-to-write-an-open-source-javascript-library)
-
-### Git Hooks
-
-There is already set a `precommit` hook for formatting your code with Prettier :nail_care:
-
-By default, there are two disabled git hooks. They're set up when you run the `npm run semantic-release-prepare` script. They make sure:
- - You follow a [conventional commit message](https://github.com/conventional-changelog/conventional-changelog)
- - Your build is not going to fail in [Travis](https://travis-ci.org) (or your CI server), since it's runned locally before `git push`
-
-This makes more sense in combination with [automatic releases](#automatic-releases)
-
-### FAQ
-
-#### `Array.prototype.from`, `Promise`, `Map`... is undefined?
-
-TypeScript or Babel only provides down-emits on syntactical features (`class`, `let`, `async/await`...), but not on functional features (`Array.prototype.find`, `Set`, `Promise`...), . For that, you need Polyfills, such as [`core-js`](https://github.com/zloirock/core-js) or [`babel-polyfill`](https://babeljs.io/docs/usage/polyfill/) (which extends `core-js`).
-
-For a library, `core-js` plays very nicely, since you can import just the polyfills you need:
-
-```javascript
-import "core-js/fn/array/find"
-import "core-js/fn/string/includes"
-import "core-js/fn/promise"
-...
+```bash
+$ yarn add rhone
 ```
 
-#### What is `npm install` doing on first run?
+Using cdn:
 
-It runs the script `tools/init` which sets up everything for you. In short, it:
- - Configures RollupJS for the build, which creates the bundles
- - Configures `package.json` (typings file, main file, etc)
- - Renames main src and test files
+```html
+<script src="https://unpkg.com/rhone/dist/rhone.min.js"></script>
+```
 
-#### What if I don't want git-hooks, automatic releases or semantic-release?
+## Example
 
-Then you may want to:
- - Remove `commitmsg`, `postinstall` scripts from `package.json`. That will not use those git hooks to make sure you make a conventional commit
- - Remove `npm run semantic-release` from `.travis.yml`
+### note: CommonJS usage
+In order to gain the TypeScript typings (for intellisense / autocomplete) while using CommonJS imports with `require()` use the following approach:
 
-#### What if I don't want to use coveralls or report my coverage?
+```js
+const rhone = require('rhone').default;
 
-Remove `npm run report-coverage` from `.travis.yml`
+// rhone.<method> will now provide autocomplete and parameter typings
+```
+
+Performing a `GET` request
+
+```js
+const rhone = require('rhone');
+
+// Make a request for a user with a given ID
+rhone.get('/user?ID=12345')
+  .then(function (response) {
+    // handle success
+    console.log(response);
+  })
+  .catch(function (error) {
+    // handle error
+    console.log(error);
+  })
+  .then(function () {
+    // always executed
+  });
+
+// Optionally the request above could also be done as
+rhone.get('/user', {
+    params: {
+      ID: 12345
+    }
+  })
+  .then(function (response) {
+    console.log(response);
+  })
+  .catch(function (error) {
+    console.log(error);
+  })
+  .then(function () {
+    // always executed
+  });  
+
+// Want to use async/await? Add the `async` keyword to your outer function/method.
+async function getUser() {
+  try {
+    const response = await rhone.get('/user?ID=12345');
+    console.log(response);
+  } catch (error) {
+    console.error(error);
+  }
+}
+```
+
+> **NOTE:** `async/await` is part of ECMAScript 2017 and is not supported in Internet
+> Explorer and older browsers, so use with caution.
+
+Performing a `POST` request
+
+```js
+rhone.post('/user', {
+    firstName: 'Fred',
+    lastName: 'Flintstone'
+  })
+  .then(function (response) {
+    console.log(response);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+```
+
+Performing multiple concurrent requests
+
+```js
+function getUserAccount() {
+  return rhone.get('/user/12345');
+}
+
+function getUserPermissions() {
+  return rhone.get('/user/12345/permissions');
+}
+
+rhone.all([getUserAccount(), getUserPermissions()])
+  .then(rhone.spread(function (acct, perms) {
+    // Both requests are now complete
+  }));
+```
+
+## rhone API
+
+Requests can be made by passing the relevant config to `rhone`.
+
+##### rhone(config)
+
+```js
+// Send a POST request
+rhone({
+  method: 'post',
+  url: '/user/12345',
+  data: {
+    firstName: 'Fred',
+    lastName: 'Flintstone'
+  }
+});
+```
+
+```js
+// GET request for remote image
+rhone({
+  method: 'get',
+  url: 'http://bit.ly/2mTM3nY',
+  responseType: 'stream'
+})
+  .then(function (response) {
+    response.data.pipe(fs.createWriteStream('ada_lovelace.jpg'))
+  });
+```
+
+##### rhone(url[, config])
+
+```js
+// Send a GET request (default method)
+rhone('/user/12345');
+```
+
+### Request method aliases
+
+For convenience aliases have been provided for all supported request methods.
+
+##### rhone.request(config)
+##### rhone.get(url[, config])
+##### rhone.delete(url[, config])
+##### rhone.head(url[, config])
+##### rhone.options(url[, config])
+##### rhone.post(url[, data[, config]])
+##### rhone.put(url[, data[, config]])
+##### rhone.patch(url[, data[, config]])
+
+###### NOTE
+When using the alias methods `url`, `method`, and `data` properties don't need to be specified in config.
+
+### Concurrency
+
+Helper functions for dealing with concurrent requests.
+
+##### rhone.all(iterable)
+##### rhone.spread(callback)
+
+### Creating an instance
+
+You can create a new instance of rhone with a custom config.
+
+##### rhone.create([config])
+
+```js
+const instance = rhone.create({
+  baseURL: 'https://some-domain.com/api/',
+  timeout: 1000,
+  headers: {'X-Custom-Header': 'foobar'}
+});
+```
+
+### Instance methods
+
+The available instance methods are listed below. The specified config will be merged with the instance config.
+
+##### rhone#request(config)
+##### rhone#get(url[, config])
+##### rhone#delete(url[, config])
+##### rhone#head(url[, config])
+##### rhone#options(url[, config])
+##### rhone#post(url[, data[, config]])
+##### rhone#put(url[, data[, config]])
+##### rhone#patch(url[, data[, config]])
+##### rhone#getUri([config])
+
+## Request Config
+
+These are the available config options for making requests. Only the `url` is required. Requests will default to `GET` if `method` is not specified.
+
+```js
+{
+  // `url` is the server URL that will be used for the request
+  url: '/user',
+
+  // `method` is the request method to be used when making the request
+  method: 'get', // default
+
+  // `baseURL` will be prepended to `url` unless `url` is absolute.
+  // It can be convenient to set `baseURL` for an instance of rhone to pass relative URLs
+  // to methods of that instance.
+  baseURL: 'https://some-domain.com/api/',
+
+  // `transformRequest` allows changes to the request data before it is sent to the server
+  // This is only applicable for request methods 'PUT', 'POST', 'PATCH' and 'DELETE'
+  // The last function in the array must return a string or an instance of Buffer, ArrayBuffer,
+  // FormData or Stream
+  // You may modify the headers object.
+  transformRequest: [function (data, headers) {
+    // Do whatever you want to transform the data
+
+    return data;
+  }],
+
+  // `transformResponse` allows changes to the response data to be made before
+  // it is passed to then/catch
+  transformResponse: [function (data) {
+    // Do whatever you want to transform the data
+
+    return data;
+  }],
+
+  // `headers` are custom headers to be sent
+  headers: {'X-Requested-With': 'XMLHttpRequest'},
+
+  // `params` are the URL parameters to be sent with the request
+  // Must be a plain object or a URLSearchParams object
+  params: {
+    ID: 12345
+  },
+
+  // `paramsSerializer` is an optional function in charge of serializing `params`
+  // (e.g. https://www.npmjs.com/package/qs, http://api.jquery.com/jquery.param/)
+  paramsSerializer: function (params) {
+    return Qs.stringify(params, {arrayFormat: 'brackets'})
+  },
+
+  // `data` is the data to be sent as the request body
+  // Only applicable for request methods 'PUT', 'POST', and 'PATCH'
+  // When no `transformRequest` is set, must be of one of the following types:
+  // - string, plain object, ArrayBuffer, ArrayBufferView, URLSearchParams
+  // - Browser only: FormData, File, Blob
+  // - Node only: Stream, Buffer
+  data: {
+    firstName: 'Fred'
+  },
+  
+  // syntax alternative to send data into the body
+  // method post
+  // only the value is sent, not the key
+  data: 'Country=Brasil&City=Belo Horizonte',
+
+  // `timeout` specifies the number of milliseconds before the request times out.
+  // If the request takes longer than `timeout`, the request will be aborted.
+  timeout: 1000, // default is `0` (no timeout)
+
+  // `withCredentials` indicates whether or not cross-site Access-Control requests
+  // should be made using credentials
+  withCredentials: false, // default
+
+  // `adapter` allows custom handling of requests which makes testing easier.
+  // Return a promise and supply a valid response (see lib/adapters/README.md).
+  adapter: function (config) {
+    /* ... */
+  },
+
+  // `auth` indicates that HTTP Basic auth should be used, and supplies credentials.
+  // This will set an `Authorization` header, overwriting any existing
+  // `Authorization` custom headers you have set using `headers`.
+  // Please note that only HTTP Basic auth is configurable through this parameter.
+  // For Bearer tokens and such, use `Authorization` custom headers instead.
+  auth: {
+    username: 'janedoe',
+    password: 's00pers3cret'
+  },
+
+  // `responseType` indicates the type of data that the server will respond with
+  // options are: 'arraybuffer', 'document', 'json', 'text', 'stream'
+  //   browser only: 'blob'
+  responseType: 'json', // default
+
+  // `responseEncoding` indicates encoding to use for decoding responses
+  // Note: Ignored for `responseType` of 'stream' or client-side requests
+  responseEncoding: 'utf8', // default
+
+  // `xsrfCookieName` is the name of the cookie to use as a value for xsrf token
+  xsrfCookieName: 'XSRF-TOKEN', // default
+
+  // `xsrfHeaderName` is the name of the http header that carries the xsrf token value
+  xsrfHeaderName: 'X-XSRF-TOKEN', // default
+
+  // `onUploadProgress` allows handling of progress events for uploads
+  onUploadProgress: function (progressEvent) {
+    // Do whatever you want with the native progress event
+  },
+
+  // `onDownloadProgress` allows handling of progress events for downloads
+  onDownloadProgress: function (progressEvent) {
+    // Do whatever you want with the native progress event
+  },
+
+  // `maxContentLength` defines the max size of the http response content in bytes allowed
+  maxContentLength: 2000,
+
+  // `validateStatus` defines whether to resolve or reject the promise for a given
+  // HTTP response status code. If `validateStatus` returns `true` (or is set to `null`
+  // or `undefined`), the promise will be resolved; otherwise, the promise will be
+  // rejected.
+  validateStatus: function (status) {
+    return status >= 200 && status < 300; // default
+  },
+
+  // `maxRedirects` defines the maximum number of redirects to follow in node.js.
+  // If set to 0, no redirects will be followed.
+  maxRedirects: 5, // default
+
+  // `socketPath` defines a UNIX Socket to be used in node.js.
+  // e.g. '/var/run/docker.sock' to send requests to the docker daemon.
+  // Only either `socketPath` or `proxy` can be specified.
+  // If both are specified, `socketPath` is used.
+  socketPath: null, // default
+
+  // `httpAgent` and `httpsAgent` define a custom agent to be used when performing http
+  // and https requests, respectively, in node.js. This allows options to be added like
+  // `keepAlive` that are not enabled by default.
+  httpAgent: new http.Agent({ keepAlive: true }),
+  httpsAgent: new https.Agent({ keepAlive: true }),
+
+  // 'proxy' defines the hostname and port of the proxy server.
+  // You can also define your proxy using the conventional `http_proxy` and
+  // `https_proxy` environment variables. If you are using environment variables
+  // for your proxy configuration, you can also define a `no_proxy` environment
+  // variable as a comma-separated list of domains that should not be proxied.
+  // Use `false` to disable proxies, ignoring environment variables.
+  // `auth` indicates that HTTP Basic auth should be used to connect to the proxy, and
+  // supplies credentials.
+  // This will set an `Proxy-Authorization` header, overwriting any existing
+  // `Proxy-Authorization` custom headers you have set using `headers`.
+  proxy: {
+    host: '127.0.0.1',
+    port: 9000,
+    auth: {
+      username: 'mikeymike',
+      password: 'rapunz3l'
+    }
+  },
+
+  // `cancelToken` specifies a cancel token that can be used to cancel the request
+  // (see Cancellation section below for details)
+  cancelToken: new CancelToken(function (cancel) {
+  })
+}
+```
+
+## Response Schema
+
+The response for a request contains the following information.
+
+```js
+{
+  // `data` is the response that was provided by the server
+  data: {},
+
+  // `status` is the HTTP status code from the server response
+  status: 200,
+
+  // `statusText` is the HTTP status message from the server response
+  statusText: 'OK',
+
+  // `headers` the headers that the server responded with
+  // All header names are lower cased
+  headers: {},
+
+  // `config` is the config that was provided to `rhone` for the request
+  config: {},
+
+  // `request` is the request that generated this response
+  // It is the last ClientRequest instance in node.js (in redirects)
+  // and an XMLHttpRequest instance in the browser
+  request: {}
+}
+```
+
+When using `then`, you will receive the response as follows:
+
+```js
+rhone.get('/user/12345')
+  .then(function (response) {
+    console.log(response.data);
+    console.log(response.status);
+    console.log(response.statusText);
+    console.log(response.headers);
+    console.log(response.config);
+  });
+```
+
+When using `catch`, or passing a [rejection callback](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/then) as second parameter of `then`, the response will be available through the `error` object as explained in the [Handling Errors](#handling-errors) section.
+
+## Config Defaults
+
+You can specify config defaults that will be applied to every request.
+
+### Global rhone defaults
+
+```js
+rhone.defaults.baseURL = 'https://api.example.com';
+rhone.defaults.headers.common['Authorization'] = AUTH_TOKEN;
+rhone.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+```
+
+### Custom instance defaults
+
+```js
+// Set config defaults when creating the instance
+const instance = rhone.create({
+  baseURL: 'https://api.example.com'
+});
+
+// Alter defaults after instance has been created
+instance.defaults.headers.common['Authorization'] = AUTH_TOKEN;
+```
+
+### Config order of precedence
+
+Config will be merged with an order of precedence. The order is library defaults found in [lib/defaults.js](https://github.com/loadchange/rhone/blob/master/lib/defaults.js#L28), then `defaults` property of the instance, and finally `config` argument for the request. The latter will take precedence over the former. Here's an example.
+
+```js
+// Create an instance using the config defaults provided by the library
+// At this point the timeout config value is `0` as is the default for the library
+const instance = rhone.create();
+
+// Override timeout default for the library
+// Now all requests using this instance will wait 2.5 seconds before timing out
+instance.defaults.timeout = 2500;
+
+// Override timeout for this request as it's known to take a long time
+instance.get('/longRequest', {
+  timeout: 5000
+});
+```
+
+## Interceptors
+
+You can intercept requests or responses before they are handled by `then` or `catch`.
+
+```js
+// Add a request interceptor
+rhone.interceptors.request.use(function (config) {
+    // Do something before request is sent
+    return config;
+  }, function (error) {
+    // Do something with request error
+    return Promise.reject(error);
+  });
+
+// Add a response interceptor
+rhone.interceptors.response.use(function (response) {
+    // Any status code that lie within the range of 2xx cause this function to trigger
+    // Do something with response data
+    return response;
+  }, function (error) {
+    // Any status codes that falls outside the range of 2xx cause this function to trigger
+    // Do something with response error
+    return Promise.reject(error);
+  });
+```
+
+If you need to remove an interceptor later you can.
+
+```js
+const myInterceptor = rhone.interceptors.request.use(function () {/*...*/});
+rhone.interceptors.request.eject(myInterceptor);
+```
+
+You can add interceptors to a custom instance of rhone.
+
+```js
+const instance = rhone.create();
+instance.interceptors.request.use(function () {/*...*/});
+```
+
+## Handling Errors
+
+```js
+rhone.get('/user/12345')
+  .catch(function (error) {
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      console.log(error.response.data);
+      console.log(error.response.status);
+      console.log(error.response.headers);
+    } else if (error.request) {
+      // The request was made but no response was received
+      // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+      // http.ClientRequest in node.js
+      console.log(error.request);
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.log('Error', error.message);
+    }
+    console.log(error.config);
+  });
+```
+
+Using the `validateStatus` config option, you can define HTTP code(s) that should throw an error.
+
+```js
+rhone.get('/user/12345', {
+  validateStatus: function (status) {
+    return status < 500; // Reject only if the status code is greater than or equal to 500
+  }
+})
+```
+
+Using `toJSON` you get an object with more information about the HTTP error.
+
+```js
+rhone.get('/user/12345')
+  .catch(function (error) {
+    console.log(error.toJSON());
+  });
+```
+
+## Cancellation
+
+You can cancel a request using a *cancel token*.
+
+> The rhone cancel token API is based on the withdrawn [cancelable promises proposal](https://github.com/tc39/proposal-cancelable-promises).
+
+You can create a cancel token using the `CancelToken.source` factory as shown below:
+
+```js
+const CancelToken = rhone.CancelToken;
+const source = CancelToken.source();
+
+rhone.get('/user/12345', {
+  cancelToken: source.token
+}).catch(function (thrown) {
+  if (rhone.isCancel(thrown)) {
+    console.log('Request canceled', thrown.message);
+  } else {
+    // handle error
+  }
+});
+
+rhone.post('/user/12345', {
+  name: 'new name'
+}, {
+  cancelToken: source.token
+})
+
+// cancel the request (the message parameter is optional)
+source.cancel('Operation canceled by the user.');
+```
+
+You can also create a cancel token by passing an executor function to the `CancelToken` constructor:
+
+```js
+const CancelToken = rhone.CancelToken;
+let cancel;
+
+rhone.get('/user/12345', {
+  cancelToken: new CancelToken(function executor(c) {
+    // An executor function receives a cancel function as a parameter
+    cancel = c;
+  })
+});
+
+// cancel the request
+cancel();
+```
+
+> Note: you can cancel several requests with the same cancel token.
+
+## Using application/x-www-form-urlencoded format
+
+By default, rhone serializes JavaScript objects to `JSON`. To send data in the `application/x-www-form-urlencoded` format instead, you can use one of the following options.
+
+### Browser
+
+In a browser, you can use the [`URLSearchParams`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams) API as follows:
+
+```js
+const params = new URLSearchParams();
+params.append('param1', 'value1');
+params.append('param2', 'value2');
+rhone.post('/foo', params);
+```
+
+> Note that `URLSearchParams` is not supported by all browsers (see [caniuse.com](http://www.caniuse.com/#feat=urlsearchparams)), but there is a [polyfill](https://github.com/WebReflection/url-search-params) available (make sure to polyfill the global environment).
+
+Alternatively, you can encode data using the [`qs`](https://github.com/ljharb/qs) library:
+
+```js
+const qs = require('qs');
+rhone.post('/foo', qs.stringify({ 'bar': 123 }));
+```
+
+Or in another way (ES6),
+
+```js
+import qs from 'qs';
+const data = { 'bar': 123 };
+const options = {
+  method: 'POST',
+  headers: { 'content-type': 'application/x-www-form-urlencoded' },
+  data: qs.stringify(data),
+  url,
+};
+rhone(options);
+```
+
+### Node.js
+
+In node.js, you can use the [`querystring`](https://nodejs.org/api/querystring.html) module as follows:
+
+```js
+const querystring = require('querystring');
+rhone.post('http://something.com/', querystring.stringify({ foo: 'bar' }));
+```
+
+You can also use the [`qs`](https://github.com/ljharb/qs) library.
+
+###### NOTE
+The `qs` library is preferable if you need to stringify nested objects, as the `querystring` method has known issues with that use case (https://github.com/nodejs/node-v0.x-archive/issues/1665).
+
+## Semver
+
+Until rhone reaches a `1.0` release, breaking changes will be released with a new minor version. For example `0.5.1`, and `0.5.4` will have the same API, but `0.6.0` will have breaking changes.
+
+## Promises
+
+rhone depends on a native ES6 Promise implementation to be [supported](http://caniuse.com/promises).
+If your environment doesn't support ES6 Promises, you can [polyfill](https://github.com/jakearchibald/es6-promise).
+
+## TypeScript
+rhone includes [TypeScript](http://typescriptlang.org) definitions.
+```typescript
+import rhone from 'rhone';
+rhone.get('/user?ID=12345');
+```
 
 ## Resources
 
-- [Write a library using TypeScript library starter](https://dev.to/alexjoverm/write-a-library-using-typescript-library-starter) by [@alexjoverm](https://github.com/alexjoverm/)
-- [📺 Create a TypeScript Library using typescript-library-starter](https://egghead.io/lessons/typescript-create-a-typescript-library-using-typescript-library-starter) by [@alexjoverm](https://github.com/alexjoverm/)
-- [Introducing TypeScript Library Starter Lite](https://blog.tonysneed.com/2017/09/15/introducing-typescript-library-starter-lite/) by [@tonysneed](https://github.com/tonysneed)
-
-## Projects using `typescript-library-starter`
-
-Here are some projects that use `typescript-library-starter`:
-
-- [NOEL - A universal, human-centric, replayable event emitter](https://github.com/lifenautjoe/noel)
-- [droppable - A library to give file dropping super-powers to any HTML element.](https://github.com/lifenautjoe/droppable)
-- [redis-messaging-manager - Pubsub messaging library, using redis and rxjs](https://github.com/tomyitav/redis-messaging-manager)
+* [Changelog](https://github.com/loadchange/rhone/blob/master/CHANGELOG.md)
+* [Upgrade Guide](https://github.com/loadchange/rhone/blob/master/UPGRADE_GUIDE.md)
+* [Ecosystem](https://github.com/loadchange/rhone/blob/master/ECOSYSTEM.md)
+* [Contributing Guide](https://github.com/loadchange/rhone/blob/master/CONTRIBUTING.md)
+* [Code of Conduct](https://github.com/loadchange/rhone/blob/master/CODE_OF_CONDUCT.md)
 
 ## Credits
 
-Made with :heart: by [@alexjoverm](https://twitter.com/alexjoverm) and all these wonderful contributors ([emoji key](https://github.com/kentcdodds/all-contributors#emoji-key)):
+rhone is heavily inspired by the [axios](https://github.com/axios/axios) provided in [axios](https://github.com/axios/axios). Ultimately rhone is an effort to provide a standalone `$http`-like service for use outside of Angular.
 
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore -->
-| [<img src="https://avatars.githubusercontent.com/u/6052309?v=3" width="100px;"/><br /><sub><b>Ciro</b></sub>](https://www.linkedin.com/in/ciro-ivan-agulló-guarinos-42109376)<br />[💻](https://github.com/alexjoverm/typescript-library-starter/commits?author=k1r0s "Code") [🔧](#tool-k1r0s "Tools") | [<img src="https://avatars.githubusercontent.com/u/947523?v=3" width="100px;"/><br /><sub><b>Marius Schulz</b></sub>](https://blog.mariusschulz.com)<br />[📖](https://github.com/alexjoverm/typescript-library-starter/commits?author=mariusschulz "Documentation") | [<img src="https://avatars.githubusercontent.com/u/4152819?v=3" width="100px;"/><br /><sub><b>Alexander Odell</b></sub>](https://github.com/alextrastero)<br />[📖](https://github.com/alexjoverm/typescript-library-starter/commits?author=alextrastero "Documentation") | [<img src="https://avatars1.githubusercontent.com/u/8728882?v=3" width="100px;"/><br /><sub><b>Ryan Ham</b></sub>](https://github.com/superamadeus)<br />[💻](https://github.com/alexjoverm/typescript-library-starter/commits?author=superamadeus "Code") | [<img src="https://avatars1.githubusercontent.com/u/8458838?v=3" width="100px;"/><br /><sub><b>Chi</b></sub>](https://consiiii.me)<br />[💻](https://github.com/alexjoverm/typescript-library-starter/commits?author=ChinW "Code") [🔧](#tool-ChinW "Tools") [📖](https://github.com/alexjoverm/typescript-library-starter/commits?author=ChinW "Documentation") | [<img src="https://avatars2.githubusercontent.com/u/2856501?v=3" width="100px;"/><br /><sub><b>Matt Mazzola</b></sub>](https://github.com/mattmazzola)<br />[💻](https://github.com/alexjoverm/typescript-library-starter/commits?author=mattmazzola "Code") [🔧](#tool-mattmazzola "Tools") | [<img src="https://avatars0.githubusercontent.com/u/2664047?v=3" width="100px;"/><br /><sub><b>Sergii Lischuk</b></sub>](http://leefrost.github.io)<br />[💻](https://github.com/alexjoverm/typescript-library-starter/commits?author=Leefrost "Code") |
-| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| [<img src="https://avatars1.githubusercontent.com/u/618922?v=3" width="100px;"/><br /><sub><b>Steve Lee</b></sub>](http;//opendirective.com)<br />[🔧](#tool-SteveALee "Tools") | [<img src="https://avatars0.githubusercontent.com/u/5127501?v=3" width="100px;"/><br /><sub><b>Flavio Corpa</b></sub>](http://flaviocorpa.com)<br />[💻](https://github.com/alexjoverm/typescript-library-starter/commits?author=kutyel "Code") | [<img src="https://avatars2.githubusercontent.com/u/22561997?v=3" width="100px;"/><br /><sub><b>Dom</b></sub>](https://github.com/foreggs)<br />[🔧](#tool-foreggs "Tools") | [<img src="https://avatars1.githubusercontent.com/u/755?v=4" width="100px;"/><br /><sub><b>Alex Coles</b></sub>](http://alexbcoles.com)<br />[📖](https://github.com/alexjoverm/typescript-library-starter/commits?author=myabc "Documentation") | [<img src="https://avatars2.githubusercontent.com/u/1093738?v=4" width="100px;"/><br /><sub><b>David Khourshid</b></sub>](https://github.com/davidkpiano)<br />[🔧](#tool-davidkpiano "Tools") | [<img src="https://avatars0.githubusercontent.com/u/7225802?v=4" width="100px;"/><br /><sub><b>Aarón García Hervás</b></sub>](https://aarongarciah.com)<br />[📖](https://github.com/alexjoverm/typescript-library-starter/commits?author=aarongarciah "Documentation") | [<img src="https://avatars2.githubusercontent.com/u/13683986?v=4" width="100px;"/><br /><sub><b>Jonathan Hart</b></sub>](https://www.stuajnht.co.uk)<br />[💻](https://github.com/alexjoverm/typescript-library-starter/commits?author=stuajnht "Code") |
-| [<img src="https://avatars0.githubusercontent.com/u/13509204?v=4" width="100px;"/><br /><sub><b>Sanjiv Lobo</b></sub>](https://github.com/Xndr7)<br />[📖](https://github.com/alexjoverm/typescript-library-starter/commits?author=Xndr7 "Documentation") | [<img src="https://avatars3.githubusercontent.com/u/7473800?v=4" width="100px;"/><br /><sub><b>Stefan Aleksovski</b></sub>](https://github.com/sAleksovski)<br />[💻](https://github.com/alexjoverm/typescript-library-starter/commits?author=sAleksovski "Code") | [<img src="https://avatars2.githubusercontent.com/u/8853426?v=4" width="100px;"/><br /><sub><b>dev.peerapong</b></sub>](https://github.com/devpeerapong)<br />[💻](https://github.com/alexjoverm/typescript-library-starter/commits?author=devpeerapong "Code") | [<img src="https://avatars0.githubusercontent.com/u/22260722?v=4" width="100px;"/><br /><sub><b>Aaron Groome</b></sub>](http://twitter.com/Racing5372)<br />[📖](https://github.com/alexjoverm/typescript-library-starter/commits?author=Racing5372 "Documentation") | [<img src="https://avatars3.githubusercontent.com/u/180963?v=4" width="100px;"/><br /><sub><b>Aaron Reisman</b></sub>](https://github.com/lifeiscontent)<br />[💻](https://github.com/alexjoverm/typescript-library-starter/commits?author=lifeiscontent "Code") | [<img src="https://avatars1.githubusercontent.com/u/32557482?v=4" width="100px;"/><br /><sub><b>kid-sk</b></sub>](https://github.com/kid-sk)<br />[📖](https://github.com/alexjoverm/typescript-library-starter/commits?author=kid-sk "Documentation") | [<img src="https://avatars0.githubusercontent.com/u/1503089?v=4" width="100px;"/><br /><sub><b>Andrea Gottardi</b></sub>](http://about.me/andreagot)<br />[📖](https://github.com/alexjoverm/typescript-library-starter/commits?author=AndreaGot "Documentation") |
-| [<img src="https://avatars3.githubusercontent.com/u/1375860?v=4" width="100px;"/><br /><sub><b>Yogendra Sharma</b></sub>](http://TechiesEyes.com)<br />[📖](https://github.com/alexjoverm/typescript-library-starter/commits?author=Yogendra0Sharma "Documentation") | [<img src="https://avatars3.githubusercontent.com/u/7407177?v=4" width="100px;"/><br /><sub><b>Rayan Salhab</b></sub>](http://linkedin.com/in/rayan-salhab/)<br />[💻](https://github.com/alexjoverm/typescript-library-starter/commits?author=cyphercodes "Code") |
-<!-- ALL-CONTRIBUTORS-LIST:END -->
+## License
 
-This project follows the [all-contributors](https://github.com/kentcdodds/all-contributors) specification. Contributions of any kind are welcome!
+[MIT](LICENSE)
